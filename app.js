@@ -3,6 +3,7 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const userRouter = require('./Routers/userRouter');
+const homeRouter = require('./Routers/homeRouter');
 
 const app = express();
 
@@ -23,8 +24,11 @@ app.use((req, res, next) => {
     next();
 });
 
-app.set('view engin', 'ejs');
+app.use(express.static('./uploads'));
 
+app.set('view engine', 'ejs');
+
+app.use('/', homeRouter);
 app.use('/', userRouter);
 
 module.exports = app;
